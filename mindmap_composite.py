@@ -1,3 +1,5 @@
+import os
+
 class MindMapComposite:
     """gathers the leaves"""
 
@@ -14,6 +16,15 @@ class MindMapComposite:
 
     def __str__(self):
         return f'{self.get_shape_representation().format(self.name)}'
+
+    def get_mind_map(self,indent=0):
+        result = ''
+        if indent == 0:
+            result += 'mindmap' + os.linesep + 'root'
+        result += ' ' * indent + str(self) + os.linesep
+        for child in self.children:
+            result += child.get_mind_map(indent + 2)
+        return result
 
     def display(self, indent=0):
         if indent == 0:

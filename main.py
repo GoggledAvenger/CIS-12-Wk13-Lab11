@@ -1,7 +1,14 @@
 # https://github.com/THartmanOfTheRedwoods/PyLab011
 
+from jinja2 import Environment, FileSystemLoader
 from mindmap_leaf import MindMapLeaf
 from mindmap_composite import MindMapComposite
+
+def get_mindmap_html(root):
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template('templates/mindmap.j2')
+    output = template.render(mindmap=root.get_mind_map())
+    return output
 
 def main():
     if __name__ == "__main__":
@@ -56,7 +63,12 @@ def main():
         stage_directions.add( MindMapLeaf( "Tense bridge scenes as the crew works together", "plain" ) )
         root.add( stage_directions )
 
-        root.display()
+#        root.display()
+#        print(root.get_mind_map())
+#        print(get_mindmap_html(root))
+
+        with open('mindmaps/wolf359mindmap.html', 'w') as file:
+            file.write(get_mindmap_html(root))
 
 
 if __name__ == "__main__":
